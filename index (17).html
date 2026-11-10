@@ -1,0 +1,494 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Eziway Security &amp; Logistics Ltd</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,500..800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: official institutional site. Sticky header, split hero with a live vault status board,
+   then services, concentric security layers, custody process, storage tiers, tier finder, enquiry. */
+:root {
+  --bg: #EEF1F2;
+  --surface: #FFFFFF;
+  --surface-2: #E3E8EA;
+  --fg: #11201F;
+  --muted: #4B5F5D;
+  --line: #C6D0D1;
+  --accent: #7D5F17;
+  --accent-fill: #C9A040;
+  --on-accent: #17120A;
+  --panel: #0E2220;
+  --panel-fg: #E6EDEB;
+  --panel-muted: #93A9A5;
+  --panel-line: #25423E;
+  --ok: #1F8A5B;
+  --font-display: "Archivo", "Helvetica Neue", Arial, sans-serif;
+  --font-body: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0A1413; --surface: #11211F; --surface-2: #172B28; --fg: #E8EEEC; --muted: #9AAFAB;
+    --line: #25403C; --accent: #D6AE50; --accent-fill: #D6AE50; --on-accent: #17120A;
+    --panel: #0E2220; --ok: #4FC08B; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0A1413; --surface: #11211F; --surface-2: #172B28; --fg: #E8EEEC; --muted: #9AAFAB;
+  --line: #25403C; --accent: #D6AE50; --accent-fill: #D6AE50; --on-accent: #17120A;
+  --panel: #0E2220; --ok: #4FC08B; color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg); color: var(--fg);
+  font-family: var(--font-body); font-size: 16px; line-height: 1.6;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 0;
+}
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 30; background: var(--bg); }
+.wrap { max-width: 1160px; margin: 0 auto; }
+h1, h2, h3 { font-family: var(--font-display); font-stretch: 112%; letter-spacing: -0.01em; line-height: 1.08; margin: 0; text-wrap: balance; }
+p { margin: 0; }
+a { color: inherit; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 2px; }
+.mono { font-family: var(--font-mono); }
+.eyebrow { font-family: var(--font-mono); font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--accent); }
+
+/* Header */
+header.site { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 20; background: color-mix(in srgb, var(--bg) 92%, transparent); backdrop-filter: blur(8px); border-bottom: 1px solid var(--line); margin: 0 calc(-1 * max(16px, env(safe-area-inset-left, 0px))); padding: 0 max(16px, env(safe-area-inset-left, 0px)); }
+header.site .wrap { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 12px 0; flex-wrap: wrap; }
+.brand { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+.brand svg { flex: none; }
+.brand b { font-family: var(--font-display); font-stretch: 112%; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; font-size: 14.5px; display: block; line-height: 1.15; }
+.brand small { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: .16em; text-transform: uppercase; color: var(--muted); }
+nav.main { display: flex; gap: 22px; flex-wrap: wrap; font-size: 14px; }
+nav.main a { text-decoration: none; color: var(--muted); padding: 6px 0; border-bottom: 2px solid transparent; }
+nav.main a:hover { color: var(--fg); border-color: var(--accent-fill); }
+
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; font: 600 15px var(--font-body); padding: 13px 22px; border: 1px solid transparent; border-radius: 3px; cursor: pointer; text-decoration: none; }
+.btn.primary { background: var(--accent-fill); color: var(--on-accent); }
+.btn.primary:hover { filter: brightness(1.06); }
+.btn.ghost { background: transparent; color: var(--fg); border-color: var(--line); }
+.btn.ghost:hover { border-color: var(--accent-fill); }
+
+/* Hero */
+.hero { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); gap: 48px; padding-block: 64px 56px; align-items: center; }
+.hero h1 { font-size: clamp(36px, 5.4vw, 64px); font-weight: 750; margin: 14px 0 20px; }
+.hero h1 em { font-style: normal; color: var(--accent); }
+.hero p.lead { font-size: 18px; color: var(--muted); max-width: 54ch; }
+.hero .cta { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 28px; }
+.assurances { display: flex; flex-wrap: wrap; gap: 8px 22px; margin-top: 30px; font-family: var(--font-mono); font-size: 12px; color: var(--muted); letter-spacing: .04em; }
+.assurances span::before { content: ""; display: inline-block; width: 7px; height: 7px; background: var(--ok); border-radius: 50%; margin-right: 8px; }
+
+/* Status board */
+.board { background: var(--panel); color: var(--panel-fg); border-radius: 6px; border: 1px solid var(--panel-line); overflow: hidden; min-width: 0; }
+.board-head { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; padding: 14px 18px; border-bottom: 1px solid var(--panel-line); font-family: var(--font-mono); font-size: 12px; color: var(--panel-muted); letter-spacing: .08em; text-transform: uppercase; }
+.board-head .live { color: #6FD3A2; }
+.board-head .live::before { content: ""; display: inline-block; width: 7px; height: 7px; border-radius: 50%; background: #6FD3A2; margin-right: 8px; animation: pulse 2.2s ease-in-out infinite; }
+@keyframes pulse { 50% { opacity: .3; } }
+.clock { padding: 18px 18px 6px; font-family: var(--font-mono); font-size: clamp(28px, 4.4vw, 40px); font-weight: 500; letter-spacing: .02em; font-variant-numeric: tabular-nums; }
+.clock small { display: block; font-size: 11px; letter-spacing: .14em; color: var(--panel-muted); text-transform: uppercase; margin-bottom: 4px; }
+.readouts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1px; background: var(--panel-line); margin-top: 16px; border-block: 1px solid var(--panel-line); }
+.readouts div { background: var(--panel); padding: 14px 18px; }
+.readouts dt { font-family: var(--font-mono); font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--panel-muted); }
+.readouts dd { margin: 4px 0 0; font-family: var(--font-mono); font-size: 17px; font-variant-numeric: tabular-nums; }
+.readouts dd.ok { color: #6FD3A2; }
+.ledger { list-style: none; margin: 0; padding: 6px 18px 12px; font-family: var(--font-mono); font-size: 12.5px; }
+.ledger li { display: grid; grid-template-columns: 62px minmax(0, 1fr); gap: 12px; padding: 9px 0; border-bottom: 1px dashed var(--panel-line); color: var(--panel-fg); }
+.ledger li:last-child { border-bottom: 0; }
+.ledger time { color: var(--panel-muted); font-variant-numeric: tabular-nums; }
+.ledger .new { animation: slidein .5s ease-out; }
+@keyframes slidein { from { opacity: 0; transform: translateY(-6px); } }
+.board-foot { padding: 10px 18px 14px; font-size: 11.5px; color: var(--panel-muted); font-family: var(--font-mono); }
+
+/* Sections */
+section { padding-block: 64px; border-top: 1px solid var(--line); }
+.sec-head { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr); gap: 32px; align-items: end; margin-bottom: 40px; }
+.sec-head h2 { font-size: clamp(28px, 3.6vw, 42px); font-weight: 720; margin-top: 10px; }
+.sec-head p { color: var(--muted); max-width: 60ch; }
+
+/* Services */
+.services { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1px; background: var(--line); border: 1px solid var(--line); }
+.service { background: var(--surface); padding: 28px 24px 30px; min-width: 0; }
+.service svg { width: 40px; height: 40px; color: var(--accent); margin-bottom: 20px; }
+.service h3 { font-size: 21px; font-weight: 700; margin-bottom: 10px; }
+.service p { color: var(--muted); font-size: 15px; }
+.service ul { list-style: none; padding: 0; margin: 16px 0 0; font-family: var(--font-mono); font-size: 12px; color: var(--fg); display: grid; gap: 6px; }
+.service li::before { content: "— "; color: var(--accent); }
+
+/* Security layers */
+.layers { display: grid; grid-template-columns: minmax(0, 420px) minmax(0, 1fr); gap: 56px; align-items: center; }
+.layers svg { width: 100%; height: auto; max-width: 100%; }
+.layer-list { list-style: none; margin: 0; padding: 0; display: grid; }
+.layer-list li { display: grid; grid-template-columns: 44px minmax(0, 1fr); gap: 16px; padding: 18px 0; border-bottom: 1px solid var(--line); }
+.layer-list li:first-child { padding-top: 0; }
+.layer-list li:last-child { border-bottom: 0; padding-bottom: 0; }
+.layer-list .tag { font-family: var(--font-mono); font-size: 12px; color: var(--accent); padding-top: 3px; }
+.layer-list h3 { font-size: 18px; font-weight: 700; margin-bottom: 4px; }
+.layer-list p { color: var(--muted); font-size: 15px; }
+
+/* Process */
+.process { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 0; counter-reset: step; border: 1px solid var(--line); background: var(--surface); }
+.step { padding: 26px 24px 28px; border-right: 1px solid var(--line); min-width: 0; counter-increment: step; position: relative; }
+.step:last-child { border-right: 0; }
+.step::before { content: "Stage " counter(step); font-family: var(--font-mono); font-size: 11.5px; letter-spacing: .14em; text-transform: uppercase; color: var(--accent); display: block; margin-bottom: 14px; }
+.step h3 { font-size: 19px; font-weight: 700; margin-bottom: 8px; }
+.step p { color: var(--muted); font-size: 15px; }
+.step .doc { display: inline-block; margin-top: 14px; font-family: var(--font-mono); font-size: 11.5px; padding: 4px 8px; background: var(--surface-2); border-radius: 2px; }
+
+/* Tiers */
+.table-scroll { overflow-x: auto; border: 1px solid var(--line); background: var(--surface); }
+table { border-collapse: collapse; width: 100%; min-width: 720px; font-size: 15px; }
+th, td { text-align: left; padding: 16px 20px; border-bottom: 1px solid var(--line); vertical-align: top; }
+thead th { font-family: var(--font-mono); font-size: 11.5px; font-weight: 500; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); background: var(--surface-2); }
+tbody th { font-family: var(--font-display); font-stretch: 108%; font-weight: 700; font-size: 17px; width: 22%; }
+tbody tr:last-child th, tbody tr:last-child td { border-bottom: 0; }
+td { color: var(--muted); }
+td b { color: var(--fg); font-weight: 600; }
+
+/* Finder + form */
+.two { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 24px; align-items: start; }
+.card { background: var(--surface); border: 1px solid var(--line); padding: 28px; min-width: 0; }
+.card h3 { font-size: 22px; font-weight: 700; margin-bottom: 6px; }
+.card > p.sub { color: var(--muted); font-size: 15px; margin-bottom: 22px; }
+label { display: block; font-family: var(--font-mono); font-size: 11.5px; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); margin-bottom: 6px; }
+select, input, textarea { width: 100%; font: 400 16px var(--font-body); color: var(--fg); background: var(--bg); border: 1px solid var(--line); border-radius: 3px; padding: 11px 12px; }
+textarea { min-height: 96px; resize: vertical; }
+.field { margin-bottom: 16px; }
+.result { margin-top: 8px; padding: 18px; background: var(--panel); color: var(--panel-fg); border-radius: 4px; }
+.result small { font-family: var(--font-mono); font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--panel-muted); }
+.result strong { display: block; font-family: var(--font-display); font-stretch: 110%; font-size: 22px; margin: 6px 0; font-weight: 700; color: #E3C06B; }
+.result p { font-size: 14.5px; color: var(--panel-muted); }
+.summary { margin-top: 18px; padding: 16px; border: 1px dashed var(--line); background: var(--bg); font-family: var(--font-mono); font-size: 12.5px; white-space: pre-wrap; overflow-wrap: anywhere; }
+.row { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 12px; }
+.contact { margin-top: 22px; display: grid; gap: 10px; font-size: 14.5px; }
+.contact dt { font-family: var(--font-mono); font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+.contact dd { margin: 2px 0 0; user-select: all; }
+
+footer { border-top: 1px solid var(--line); padding-block: 36px 48px; color: var(--muted); font-size: 13.5px; }
+footer .wrap { display: flex; justify-content: space-between; gap: 24px; flex-wrap: wrap; }
+footer p { max-width: 70ch; }
+
+@media (max-width: 900px) {
+  .hero, .layers, .two, .sec-head { grid-template-columns: minmax(0, 1fr); gap: 32px; }
+  .hero { padding-block: 40px 40px; }
+  .step { border-right: 0; border-bottom: 1px solid var(--line); }
+  .step:last-child { border-bottom: 0; }
+  section { padding-block: 48px; }
+  nav.main { gap: 16px; }
+}
+@media (max-width: 520px) { .card { padding: 20px; } }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } .live::before, .ledger .new { animation: none !important; } }
+</style>
+</head>
+<body>
+<header class="site">
+  <div class="wrap">
+    <a class="brand" href="#top" aria-label="Eziway Security and Logistics Ltd home">
+      <svg width="38" height="38" viewBox="0 0 38 38" aria-hidden="true">
+        <rect x="1" y="1" width="36" height="36" rx="3" fill="none" stroke="var(--accent-fill)" stroke-width="2"/>
+        <circle cx="19" cy="19" r="10" fill="none" stroke="var(--fg)" stroke-width="1.6"/>
+        <circle cx="19" cy="19" r="3" fill="var(--accent-fill)"/>
+        <path d="M19 9v4M19 25v4M9 19h4M25 19h4" stroke="var(--fg)" stroke-width="1.6"/>
+      </svg>
+      <span><b>EZIWAY SECURITY &amp; LOGISTICS LTD</b><small>Vault storage for precious assets</small></span>
+    </a>
+    <nav class="main" aria-label="Primary">
+      <a href="#services">Services</a>
+      <a href="#security">Security</a>
+      <a href="#process">Custody process</a>
+      <a href="#tiers">Storage tiers</a>
+      <a href="#enquiry">Enquiry</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+  <div class="wrap">
+    <div class="hero">
+      <div>
+        <div class="eyebrow">Vault storage for gold, precious metals &amp; gemstones</div>
+        <h1>Custody for what <em>cannot be replaced.</em></h1>
+        <p class="lead">Eziway Security &amp; Logistics Ltd stores gold, precious metals and precious stones, and nothing else. Every item is verified on intake, sealed, logged and insured at its declared value. Armoured logistics carry it in and out.</p>
+        <div class="cta">
+          <a class="btn primary" href="#enquiry">Request storage</a>
+          <a class="btn ghost" href="#process">See how custody works</a>
+        </div>
+        <div class="assurances">
+          <span>Precious assets only</span>
+          <span>Segregated storage</span>
+          <span>24/7 monitored</span>
+          <span>Insured at declared value</span>
+        </div>
+      </div>
+
+      <aside class="board" aria-label="Vault status board">
+        <div class="board-head"><span class="live">Vault status</span><span id="zone">Local time</span></div>
+        <div class="clock"><small>Facility clock</small><span id="clock">--:--:--</span></div>
+        <dl class="readouts">
+          <div><dt>Perimeter</dt><dd class="ok">Secured</dd></div>
+          <div><dt>Vault door</dt><dd class="ok">Time-lock set</dd></div>
+          <div><dt>Temperature</dt><dd id="temp">20.4 °C</dd></div>
+          <div><dt>Humidity</dt><dd id="hum">44 %</dd></div>
+        </dl>
+        <ul class="ledger" id="ledger" aria-live="polite"></ul>
+        <div class="board-foot">Illustrative display. Connect your facility feed to show real readings.</div>
+      </aside>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <section id="services">
+      <div class="sec-head">
+        <div><div class="eyebrow">What we store</div><h2>Three asset classes. One standard of care.</h2></div>
+        <p>We accept only gold, precious metals and precious stones. No documents, no general valuables, no mixed cargo. A narrow scope lets us build the vault, the handling rules and the insurance around the assets we hold.</p>
+      </div>
+      <div class="services">
+        <article class="service">
+          <svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M6 28l5-10h18l5 10z"/><path d="M12 18l3-7h10l3 7"/><path d="M14 23h12"/></svg>
+          <h3>Gold</h3>
+          <p>Bars, coins, doré and refined bullion held in individually numbered, sealed containers.</p>
+          <ul><li>Weighed &amp; recorded on intake</li><li>Serial numbers logged</li><li>Segregated or bulk</li></ul>
+        </article>
+        <article class="service">
+          <svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="7" y="9" width="26" height="8" rx="1"/><rect x="7" y="21" width="26" height="8" rx="1"/><path d="M12 13h6M12 25h6"/></svg>
+          <h3>Precious metals</h3>
+          <p>Silver, platinum, palladium and other investment-grade metals in bar, ingot or granule form.</p>
+          <ul><li>Assay documents on file</li><li>Moisture-controlled bays</li><li>Lot-level tracking</li></ul>
+        </article>
+        <article class="service">
+          <svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M12 8h16l6 8-14 17L6 16z"/><path d="M6 16h28M15 8l5 8 5-8M20 33l-5-17M20 33l5-17"/></svg>
+          <h3>Gemstones</h3>
+          <p>Diamonds, rubies, emeralds, sapphires and other cut or rough stones, packed and sealed by lot.</p>
+          <ul><li>Grading reports attached</li><li>Individual lot envelopes</li><li>Viewing room on request</li></ul>
+        </article>
+        <article class="service">
+          <svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="4" y="13" width="22" height="14" rx="1"/><path d="M26 17h6l4 5v5H26z"/><circle cx="11" cy="29" r="3"/><circle cx="30" cy="29" r="3"/></svg>
+          <h3>Secure logistics</h3>
+          <p>Armoured, tracked transport between your location and the vault, with a two-person crew and sealed handover.</p>
+          <ul><li>Live route tracking</li><li>Signed handover at both ends</li><li>Insured in transit</li></ul>
+        </article>
+      </div>
+    </section>
+
+    <section id="security">
+      <div class="sec-head">
+        <div><div class="eyebrow">Security</div><h2>Four layers between the street and your asset.</h2></div>
+        <p>Each layer works on its own. An intruder, or an error, has to get past all four, and every crossing is recorded.</p>
+      </div>
+      <div class="layers">
+        <svg viewBox="0 0 400 400" role="img" aria-label="Four concentric security layers: perimeter, building, vault chamber, individual safe box">
+          <rect x="10" y="10" width="380" height="380" rx="8" fill="var(--surface-2)" stroke="var(--line)"/>
+          <rect x="52" y="52" width="296" height="296" rx="6" fill="var(--surface)" stroke="var(--muted)" stroke-width="1.5"/>
+          <rect x="100" y="100" width="200" height="200" rx="4" fill="var(--panel)" stroke="var(--accent-fill)" stroke-width="2"/>
+          <rect x="150" y="150" width="100" height="100" rx="3" fill="none" stroke="var(--accent-fill)" stroke-width="2" stroke-dasharray="6 4"/>
+          <circle cx="200" cy="200" r="16" fill="var(--accent-fill)"/>
+          <circle cx="200" cy="200" r="6" fill="var(--panel)"/>
+          <g font-family="IBM Plex Mono, monospace" font-size="11" letter-spacing="1.2">
+            <text x="24" y="34" fill="var(--muted)">01 PERIMETER</text>
+            <text x="66" y="76" fill="var(--muted)">02 BUILDING</text>
+            <text x="114" y="124" fill="#93A9A5">03 VAULT</text>
+            <text x="160" y="172" fill="var(--accent-fill)">04 BOX</text>
+          </g>
+        </svg>
+        <ol class="layer-list">
+          <li><span class="tag">L1</span><div><h3>Controlled perimeter</h3><p>Fenced grounds, vehicle barriers, perimeter cameras and a single screened entrance for people and armoured vehicles.</p></div></li>
+          <li><span class="tag">L2</span><div><h3>Hardened building</h3><p>Reinforced structure, mantrap entry, 24-hour on-site guards and an alarm centre that never closes.</p></div></li>
+          <li><span class="tag">L3</span><div><h3>Vault chamber</h3><p>Rated vault door with time-lock, seismic and thermal sensors, dual-control access and no lone entry.</p></div></li>
+          <li><span class="tag">L4</span><div><h3>Individual container</h3><p>Your assets sit in a sealed, numbered container. Opening it takes your authorisation and two of our officers.</p></div></li>
+        </ol>
+      </div>
+    </section>
+
+    <section id="process">
+      <div class="sec-head">
+        <div><div class="eyebrow">Chain of custody</div><h2>From your hands to the vault, and back again.</h2></div>
+        <p>Every handover is documented and counter-signed. You get a receipt at each stage, so the record of who held what, and when, is never in question.</p>
+      </div>
+      <div class="process">
+        <div class="step"><h3>Verify &amp; onboard</h3><p>Identity and source-of-assets checks, then a custody agreement stating what you are depositing and its declared value.</p><span class="doc">Custody agreement</span></div>
+        <div class="step"><h3>Collect or receive</h3><p>Your items arrive by armoured transport or you deliver them in person. We count, weigh and photograph in front of you.</p><span class="doc">Intake receipt</span></div>
+        <div class="step"><h3>Seal &amp; vault</h3><p>Items are sealed in numbered containers and placed in your storage unit by two officers. The seal number is recorded.</p><span class="doc">Seal register entry</span></div>
+        <div class="step"><h3>Monitor &amp; report</h3><p>Continuous monitoring, periodic inspections and a statement of holdings sent on a schedule you choose.</p><span class="doc">Holdings statement</span></div>
+        <div class="step"><h3>Release</h3><p>Release needs your written instruction and identity check. We confirm seals are intact before anything leaves.</p><span class="doc">Release certificate</span></div>
+      </div>
+    </section>
+
+    <section id="tiers">
+      <div class="sec-head">
+        <div><div class="eyebrow">Storage tiers</div><h2>Pick the arrangement that fits the holding.</h2></div>
+        <p>Pricing follows declared value and storage type. Rates are quoted per client after onboarding. Cover is arranged through SIC Insurance PLC.</p>
+      </div>
+      <div class="table-scroll">
+        <table>
+          <thead><tr><th>Tier</th><th>Best for</th><th>Storage</th><th>Access</th><th>Insurance</th></tr></thead>
+          <tbody>
+            <tr><th>Vault Box</th><td>Individuals with smaller holdings of coins, small bars or stones</td><td><b>Private box</b> in a shared vault chamber</td><td>By appointment, escorted</td><td>Declared value, standard cover</td></tr>
+            <tr><th>Segregated Cage</th><td>Investors and traders holding bullion or graded stones in volume</td><td><b>Dedicated cage</b>, your items kept apart from all others</td><td>Scheduled release, 24-hour notice</td><td>Declared value, extended cover</td></tr>
+            <tr><th>Private Suite</th><td>Refiners, dealers and institutions with large or frequently moving stock</td><td><b>Locked suite</b> with its own vault door and viewing table</td><td>Arranged access windows, on-site counting</td><td>Custom cover and audit support</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section id="enquiry">
+      <div class="sec-head">
+        <div><div class="eyebrow">Get started</div><h2>Find your tier, then send us the details.</h2></div>
+        <p>Answer three questions for a suggested tier. Then prepare an enquiry summary to send to our onboarding team.</p>
+      </div>
+      <div class="two">
+        <div class="card">
+          <h3>Tier finder</h3>
+          <p class="sub">A starting point only. Our onboarding team confirms the final arrangement.</p>
+          <div class="field"><label for="f-asset">Asset type</label>
+            <select id="f-asset"><option value="gold">Gold</option><option value="metals">Other precious metals</option><option value="stones">Gemstones and diamonds</option><option value="mixed">A mix of these</option></select></div>
+          <div class="field"><label for="f-value">Declared value (USD)</label>
+            <select id="f-value"><option value="0">Under 100,000</option><option value="1" selected>100,000 to 1 million</option><option value="2">1 million to 10 million</option><option value="3">Over 10 million</option></select></div>
+          <div class="field"><label for="f-access">How often will you access it?</label>
+            <select id="f-access"><option value="0">Rarely, a few times a year</option><option value="1" selected>Quarterly</option><option value="2">Monthly or more</option></select></div>
+          <div class="result" id="result" aria-live="polite"></div>
+        </div>
+
+        <div class="card">
+          <h3>Storage enquiry</h3>
+          <p class="sub">This prepares a summary you can copy and send. Nothing is transmitted from this page.</p>
+          <form id="enq" novalidate>
+            <div class="field"><label for="e-name">Full name or company</label><input id="e-name" autocomplete="name" placeholder="Name or company"></div>
+            <div class="field"><label for="e-items">What would you like to store?</label><textarea id="e-items" placeholder="For example: 40 x 1 kg gold bars, plus 12 certified diamonds"></textarea></div>
+            <div class="field"><label for="e-transport">Do you need armoured collection?</label>
+              <select id="e-transport"><option>Yes, collect from my location</option><option>No, I will deliver in person</option><option>Not sure yet</option></select></div>
+            <button class="btn primary" type="submit">Prepare enquiry summary</button>
+          </form>
+          <div id="summary-box" hidden>
+            <div class="summary" id="summary"></div>
+            <div class="row"><button class="btn ghost" type="button" id="copy">Copy summary</button><span id="copied" class="mono" style="font-size:12px;align-self:center;color:var(--muted)"></span></div>
+          </div>
+          <dl class="contact">
+            <div><dt>Onboarding email</dt><dd>eziwaysecuritylogisticsltd@gmail.com</dd></div>
+            <div><dt>Telephone</dt><dd>+233 547078297</dd></div>
+            <div><dt>Office address</dt><dd>Airport City, 4th Floor, Silver Star Tower, La Dade Kotopon Municipal, Accra</dd></div>
+            <div><dt>Visits</dt><dd>By appointment only, after verification.</dd></div>
+          </dl>
+        </div>
+      </div>
+    </section>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p>Registration number: BN590733214. Insurer: SIC Insurance PLC. Storage is subject to onboarding checks and a signed custody agreement.</p>
+    <p class="mono">© 2026 Eziway Security &amp; Logistics Ltd</p>
+  </div>
+</footer>
+
+<script>
+(function () {
+  var $ = function (id) { return document.getElementById(id); };
+
+  // Facility clock
+  function tick() {
+    var d = new Date();
+    $("clock").textContent = d.toLocaleTimeString("en-GB", { hour12: false });
+    try { $("zone").textContent = Intl.DateTimeFormat().resolvedOptions().timeZone; } catch (e) {}
+  }
+  tick(); setInterval(tick, 1000);
+
+  // Environmental readouts drift slightly
+  setInterval(function () {
+    $("temp").textContent = (20.2 + Math.random() * 0.5).toFixed(1) + " °C";
+    $("hum").textContent = Math.round(43 + Math.random() * 3) + " %";
+  }, 4000);
+
+  // Illustrative custody ledger
+  var events = [
+    "Armoured transport arrived. Seals verified.",
+    "Intake weighed and photographed. Two officers present.",
+    "Container sealed. Seal no. recorded in register.",
+    "Vault door opened under dual control.",
+    "Stones lot placed in Cage 07. Door re-locked.",
+    "Quarterly inspection complete. All seals intact.",
+    "Release instruction verified against ID.",
+    "Holdings statement issued to client."
+  ];
+  var ledger = $("ledger"), idx = 0;
+  function stamp(offsetMin) {
+    var d = new Date(Date.now() - offsetMin * 60000);
+    return d.toLocaleTimeString("en-GB", { hour: "2-digit", minute: "2-digit", hour12: false });
+  }
+  function add(msg, offset, fresh) {
+    var li = document.createElement("li");
+    if (fresh) li.className = "new";
+    li.innerHTML = "<time></time><span></span>";
+    li.querySelector("time").textContent = stamp(offset);
+    li.querySelector("span").textContent = msg;
+    ledger.insertBefore(li, ledger.firstChild);
+    while (ledger.children.length > 4) ledger.removeChild(ledger.lastChild);
+  }
+  [3, 2, 1, 0].forEach(function (o, i) { add(events[(3 - i) % events.length], o * 9 + 4, false); });
+  idx = 4;
+  setInterval(function () { add(events[idx % events.length], 0, true); idx++; }, 7000);
+
+  // Tier finder
+  var tiers = [
+    { n: "Vault Box", t: "A private box in a shared vault chamber suits smaller holdings that you visit occasionally." },
+    { n: "Segregated Cage", t: "A dedicated cage keeps your items apart from all others and supports scheduled releases." },
+    { n: "Private Suite", t: "A locked suite with its own vault door suits large holdings and frequent movement." }
+  ];
+  function find() {
+    var v = +$("f-value").value, a = +$("f-access").value, asset = $("f-asset").value;
+    var score = v >= 3 ? 2 : v === 2 ? (a === 2 ? 2 : 1) : v === 1 ? (a === 2 ? 1 : (asset === "mixed" ? 1 : 0)) : 0;
+    if (v === 1 && a === 1) score = 1;
+    if (v === 0 && a === 2) score = 1;
+    var t = tiers[score];
+    var extra = asset === "stones" ? " Stones are packed and sealed by lot, with grading reports kept on file." :
+                asset === "gold" ? " Bars are logged by serial number on intake." :
+                asset === "metals" ? " Assay documents are kept with each lot." : " Each asset class is sealed and logged separately.";
+    $("result").innerHTML = "<small>Suggested tier</small><strong></strong><p></p>";
+    $("result").querySelector("strong").textContent = t.n;
+    $("result").querySelector("p").textContent = t.t + extra;
+  }
+  ["f-asset", "f-value", "f-access"].forEach(function (id) { $(id).addEventListener("change", find); });
+  find();
+
+  // Enquiry summary (nothing is sent)
+  var text = "";
+  $("enq").addEventListener("submit", function (e) {
+    e.preventDefault();
+    var name = $("e-name").value.trim() || "(not provided)";
+    var items = $("e-items").value.trim() || "(not provided)";
+    var sel = function (id) { var s = $(id); return s.options[s.selectedIndex].text; };
+    text = "STORAGE ENQUIRY\n" +
+      "Client: " + name + "\n" +
+      "Assets: " + items + "\n" +
+      "Asset type: " + sel("f-asset") + "\n" +
+      "Declared value (USD): " + sel("f-value") + "\n" +
+      "Access: " + sel("f-access") + "\n" +
+      "Suggested tier: " + $("result").querySelector("strong").textContent + "\n" +
+      "Armoured collection: " + sel("e-transport");
+    $("summary").textContent = text;
+    $("summary-box").hidden = false;
+    $("copied").textContent = "";
+  });
+  $("copy").addEventListener("click", function () {
+    var done = function (m) { $("copied").textContent = m; };
+    try {
+      navigator.clipboard.writeText(text).then(function () { done("Copied"); }, function () { sel(); });
+    } catch (e) { sel(); }
+    function sel() {
+      var r = document.createRange(); r.selectNodeContents($("summary"));
+      var s = window.getSelection(); s.removeAllRanges(); s.addRange(r);
+      done("Selected. Press copy on your device.");
+    }
+  });
+})();
+</script>
+
+</body>
+</html>
