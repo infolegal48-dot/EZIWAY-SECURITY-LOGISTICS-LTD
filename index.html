@@ -11,35 +11,23 @@
 /* Layout: official institutional site. Sticky header, split hero with a live vault status board,
    then services, concentric security layers, custody process, storage tiers, tier finder, enquiry. */
 :root {
-  --bg: #EEF1F2;
+  --bg: #F7F9FB;
   --surface: #FFFFFF;
-  --surface-2: #E3E8EA;
-  --fg: #11201F;
-  --muted: #4B5F5D;
-  --line: #C6D0D1;
-  --accent: #7D5F17;
-  --accent-fill: #C9A040;
-  --on-accent: #17120A;
-  --panel: #0E2220;
-  --panel-fg: #E6EDEB;
-  --panel-muted: #93A9A5;
-  --panel-line: #25423E;
-  --ok: #1F8A5B;
+  --surface-2: #EAF1F6;
+  --fg: #14263A;
+  --muted: #53687C;
+  --line: #D6E0E8;
+  --accent: #8A6410;
+  --accent-fill: #E0B552;
+  --on-accent: #1B1405;
+  --panel: #EAF2F8;
+  --panel-fg: #14263A;
+  --panel-muted: #55697D;
+  --panel-line: #CBD9E5;
+  --ok: #1B8556;
   --font-display: "Archivo", "Helvetica Neue", Arial, sans-serif;
   --font-body: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
   --font-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
-}
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) {
-    --bg: #0A1413; --surface: #11211F; --surface-2: #172B28; --fg: #E8EEEC; --muted: #9AAFAB;
-    --line: #25403C; --accent: #D6AE50; --accent-fill: #D6AE50; --on-accent: #17120A;
-    --panel: #0E2220; --ok: #4FC08B; color-scheme: dark;
-  }
-}
-:root[data-theme="dark"] {
-  --bg: #0A1413; --surface: #11211F; --surface-2: #172B28; --fg: #E8EEEC; --muted: #9AAFAB;
-  --line: #25403C; --accent: #D6AE50; --accent-fill: #D6AE50; --on-accent: #17120A;
-  --panel: #0E2220; --ok: #4FC08B; color-scheme: dark;
 }
 
 * { box-sizing: border-box; }
@@ -51,6 +39,7 @@ body {
   padding-right: max(16px, env(safe-area-inset-right, 0px));
   padding-block: 0;
 }
+body { background-image: linear-gradient(180deg, #FFFFFF 0, var(--bg) 640px); background-repeat: no-repeat; }
 body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 30; background: var(--bg); }
 .wrap { max-width: 1160px; margin: 0 auto; }
 h1, h2, h3 { font-family: var(--font-display); font-stretch: 112%; letter-spacing: -0.01em; line-height: 1.08; margin: 0; text-wrap: balance; }
@@ -89,8 +78,8 @@ nav.main a:hover { color: var(--fg); border-color: var(--accent-fill); }
 /* Status board */
 .board { background: var(--panel); color: var(--panel-fg); border-radius: 6px; border: 1px solid var(--panel-line); overflow: hidden; min-width: 0; }
 .board-head { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; padding: 14px 18px; border-bottom: 1px solid var(--panel-line); font-family: var(--font-mono); font-size: 12px; color: var(--panel-muted); letter-spacing: .08em; text-transform: uppercase; }
-.board-head .live { color: #6FD3A2; }
-.board-head .live::before { content: ""; display: inline-block; width: 7px; height: 7px; border-radius: 50%; background: #6FD3A2; margin-right: 8px; animation: pulse 2.2s ease-in-out infinite; }
+.board-head .live { color: var(--ok); }
+.board-head .live::before { content: ""; display: inline-block; width: 7px; height: 7px; border-radius: 50%; background: var(--ok); margin-right: 8px; animation: pulse 2.2s ease-in-out infinite; }
 @keyframes pulse { 50% { opacity: .3; } }
 .clock { padding: 18px 18px 6px; font-family: var(--font-mono); font-size: clamp(28px, 4.4vw, 40px); font-weight: 500; letter-spacing: .02em; font-variant-numeric: tabular-nums; }
 .clock small { display: block; font-size: 11px; letter-spacing: .14em; color: var(--panel-muted); text-transform: uppercase; margin-bottom: 4px; }
@@ -98,7 +87,7 @@ nav.main a:hover { color: var(--fg); border-color: var(--accent-fill); }
 .readouts div { background: var(--panel); padding: 14px 18px; }
 .readouts dt { font-family: var(--font-mono); font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--panel-muted); }
 .readouts dd { margin: 4px 0 0; font-family: var(--font-mono); font-size: 17px; font-variant-numeric: tabular-nums; }
-.readouts dd.ok { color: #6FD3A2; }
+.readouts dd.ok { color: var(--ok); }
 .ledger { list-style: none; margin: 0; padding: 6px 18px 12px; font-family: var(--font-mono); font-size: 12.5px; }
 .ledger li { display: grid; grid-template-columns: 62px minmax(0, 1fr); gap: 12px; padding: 9px 0; border-bottom: 1px dashed var(--panel-line); color: var(--panel-fg); }
 .ledger li:last-child { border-bottom: 0; }
@@ -161,9 +150,9 @@ label { display: block; font-family: var(--font-mono); font-size: 11.5px; letter
 select, input, textarea { width: 100%; font: 400 16px var(--font-body); color: var(--fg); background: var(--bg); border: 1px solid var(--line); border-radius: 3px; padding: 11px 12px; }
 textarea { min-height: 96px; resize: vertical; }
 .field { margin-bottom: 16px; }
-.result { margin-top: 8px; padding: 18px; background: var(--panel); color: var(--panel-fg); border-radius: 4px; }
+.result { margin-top: 8px; padding: 18px; background: var(--panel); color: var(--panel-fg); border: 1px solid var(--panel-line); border-radius: 4px; }
 .result small { font-family: var(--font-mono); font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--panel-muted); }
-.result strong { display: block; font-family: var(--font-display); font-stretch: 110%; font-size: 22px; margin: 6px 0; font-weight: 700; color: #E3C06B; }
+.result strong { display: block; font-family: var(--font-display); font-stretch: 110%; font-size: 22px; margin: 6px 0; font-weight: 700; color: var(--accent); }
 .result p { font-size: 14.5px; color: var(--panel-muted); }
 .summary { margin-top: 18px; padding: 16px; border: 1px dashed var(--line); background: var(--bg); font-family: var(--font-mono); font-size: 12.5px; white-space: pre-wrap; overflow-wrap: anywhere; }
 .row { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 12px; }
@@ -171,6 +160,23 @@ textarea { min-height: 96px; resize: vertical; }
 .contact dt { font-family: var(--font-mono); font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
 .contact dd { margin: 2px 0 0; user-select: all; }
 
+[hidden] { display: none !important; }
+.btn.small { padding: 9px 16px; font-size: 14px; }
+.head-actions { display: flex; align-items: center; gap: 22px; flex-wrap: wrap; }
+.modal { position: fixed; inset: 0; z-index: 40; display: flex; align-items: center; justify-content: center; padding: max(16px, env(safe-area-inset-top, 0px)) max(16px, env(safe-area-inset-right, 0px)) max(16px, env(safe-area-inset-bottom, 0px)) max(16px, env(safe-area-inset-left, 0px)); background: rgba(20, 38, 58, .45); }
+.modal-card { position: relative; width: 100%; max-width: 440px; max-height: 100%; overflow-y: auto; background: var(--surface); border: 1px solid var(--line); border-top: 4px solid var(--accent-fill); border-radius: 4px; padding: 32px 28px 26px; box-shadow: 0 20px 50px rgba(20, 38, 58, .25); }
+.modal-card h3 { font-size: 26px; font-weight: 720; margin: 8px 0 8px; }
+.modal-card .sub { color: var(--muted); font-size: 15px; margin-bottom: 22px; }
+.modal-x { position: absolute; top: 10px; right: 12px; width: 36px; height: 36px; border: 0; background: transparent; color: var(--muted); font-size: 26px; line-height: 1; cursor: pointer; border-radius: 3px; }
+.modal-x:hover { color: var(--fg); background: var(--surface-2); }
+.portal-msg { margin: 0 0 16px; padding: 12px 14px; font-size: 14.5px; background: var(--surface-2); border-left: 3px solid var(--accent-fill); color: var(--fg); }
+.verified { display: flex; align-items: center; gap: 10px; padding: 12px 14px; margin-bottom: 18px; background: var(--surface-2); border-left: 3px solid var(--ok); font-size: 14.5px; }
+.verified b { font-family: var(--font-display); font-stretch: 108%; }
+.portal-table { overflow-x: auto; border: 1px solid var(--line); margin-bottom: 16px; }
+.portal-table table { min-width: 460px; font-size: 14px; }
+.portal-table th, .portal-table td { padding: 10px 12px; }
+.portal-empty { padding: 16px; font-size: 14.5px; color: var(--muted); }
+.fine { margin-top: 18px; font-size: 13px; color: var(--muted); }
 footer { border-top: 1px solid var(--line); padding-block: 36px 48px; color: var(--muted); font-size: 13.5px; }
 footer .wrap { display: flex; justify-content: space-between; gap: 24px; flex-wrap: wrap; }
 footer p { max-width: 70ch; }
@@ -206,6 +212,7 @@ footer p { max-width: 70ch; }
       <a href="#tiers">Storage tiers</a>
       <a href="#enquiry">Enquiry</a>
     </nav>
+    <button class="btn primary small" type="button" data-open-portal>See Your Storage</button>
   </div>
 </header>
 
@@ -218,6 +225,7 @@ footer p { max-width: 70ch; }
         <p class="lead">Eziway Security &amp; Logistics Ltd stores gold, precious metals and precious stones, and nothing else. Every item is verified on intake, sealed, logged and insured at its declared value. Armoured logistics carry it in and out.</p>
         <div class="cta">
           <a class="btn primary" href="#enquiry">Request storage</a>
+          <button class="btn ghost" type="button" data-open-portal>See Your Storage</button>
           <a class="btn ghost" href="#process">See how custody works</a>
         </div>
         <div class="assurances">
@@ -286,15 +294,15 @@ footer p { max-width: 70ch; }
         <svg viewBox="0 0 400 400" role="img" aria-label="Four concentric security layers: perimeter, building, vault chamber, individual safe box">
           <rect x="10" y="10" width="380" height="380" rx="8" fill="var(--surface-2)" stroke="var(--line)"/>
           <rect x="52" y="52" width="296" height="296" rx="6" fill="var(--surface)" stroke="var(--muted)" stroke-width="1.5"/>
-          <rect x="100" y="100" width="200" height="200" rx="4" fill="var(--panel)" stroke="var(--accent-fill)" stroke-width="2"/>
+          <rect x="100" y="100" width="200" height="200" rx="4" fill="var(--panel)" stroke="var(--accent-fill)" stroke-width="2.5"/>
           <rect x="150" y="150" width="100" height="100" rx="3" fill="none" stroke="var(--accent-fill)" stroke-width="2" stroke-dasharray="6 4"/>
           <circle cx="200" cy="200" r="16" fill="var(--accent-fill)"/>
-          <circle cx="200" cy="200" r="6" fill="var(--panel)"/>
+          <circle cx="200" cy="200" r="6" fill="var(--surface)"/>
           <g font-family="IBM Plex Mono, monospace" font-size="11" letter-spacing="1.2">
             <text x="24" y="34" fill="var(--muted)">01 PERIMETER</text>
             <text x="66" y="76" fill="var(--muted)">02 BUILDING</text>
-            <text x="114" y="124" fill="#93A9A5">03 VAULT</text>
-            <text x="160" y="172" fill="var(--accent-fill)">04 BOX</text>
+            <text x="114" y="124" fill="var(--muted)">03 VAULT</text>
+            <text x="160" y="172" fill="var(--accent)">04 BOX</text>
           </g>
         </svg>
         <ol class="layer-list">
@@ -387,6 +395,33 @@ footer p { max-width: 70ch; }
     <p class="mono">© 2026 Eziway Security &amp; Logistics Ltd</p>
   </div>
 </footer>
+
+<div class="modal" id="portal" hidden role="dialog" aria-modal="true" aria-labelledby="portal-title">
+  <div class="modal-card">
+    <button class="modal-x" type="button" id="portal-close" aria-label="Close">&times;</button>
+    <div class="eyebrow">Depositor access</div>
+    <h3 id="portal-title">See your storage</h3>
+    <p class="sub">Enter the depositor name on your custody agreement and the security code issued to you at onboarding.</p>
+    <form id="portal-form" novalidate autocomplete="off">
+      <div class="field"><label for="p-name">Depositor name</label><input id="p-name" name="depositor" autocomplete="off" placeholder="Name on your custody agreement"></div>
+      <div class="field"><label for="p-code">Security code</label><input id="p-code" name="code" type="password" autocomplete="off" inputmode="text" placeholder="Your security code"></div>
+      <p class="portal-msg" id="portal-msg" role="alert" hidden></p>
+      <button class="btn primary" type="submit" id="portal-submit" style="width:100%">View my storage</button>
+    </form>
+    <div id="portal-view" hidden>
+      <div class="verified"><span>Verified depositor:</span> <b id="pv-name"></b></div>
+      <div class="portal-table">
+        <table>
+          <thead><tr><th>Item</th><th>Weight</th><th>Purity</th><th>Vault no.</th><th>Stored since</th></tr></thead>
+          <tbody id="pv-rows"></tbody>
+        </table>
+        <p class="portal-empty" id="pv-empty" hidden>Your storage details will appear here once your onboarding officer has confirmed them.</p>
+      </div>
+      <button class="btn ghost" type="button" id="pv-out" style="width:100%">Sign out</button>
+    </div>
+    <p class="fine">Lost your code? Contact onboarding on +233 547078297 or eziwaysecuritylogisticsltd@gmail.com. Never share your security code with anyone.</p>
+  </div>
+</div>
 
 <script>
 (function () {
@@ -486,6 +521,125 @@ footer p { max-width: 70ch; }
       var s = window.getSelection(); s.removeAllRanges(); s.addRange(r);
       done("Selected. Press copy on your device.");
     }
+  });
+  // Depositor access
+  // PORTAL_ENDPOINT: address of a secure sign-in service. While it is empty, the page checks depositors against ACCOUNTS below.
+  // Each account holds a SHA-256 hash of "lowercased name|code" instead of the code itself.
+  // Holdings listed here are visible to anyone who opens the page source, so add only details you are happy to expose.
+  var PORTAL_ENDPOINT = "";
+  var ACCOUNTS = [
+    { h: "ec2e90b7a3b22ef7e181a79ee2a1d3c33f7004a0840254184c6aa37cedc25426", name: "Kyeremeh Kingsley",
+      holdings: [ { item: "Gold bars", qty: "45 kg", purity: "99.9%", vault: "V-0417", since: "6 December 2019" } ] }
+  ];
+  function sha256(str) {
+    var bytes = unescape(encodeURIComponent(str)), K = [], H0 = [], i, j, c;
+    function frac(x) { return Math.floor((x - Math.floor(x)) * 4294967296) >>> 0; }
+    function prime(x) { for (var d = 2; d * d <= x; d++) if (x % d === 0) return false; return true; }
+    for (c = 2; K.length < 64; c++) if (prime(c)) { if (H0.length < 8) H0.push(frac(Math.sqrt(c))); K.push(frac(Math.cbrt(c))); }
+    function rotr(x, n) { return (x >>> n) | (x << (32 - n)); }
+    var l = bytes.length, words = [];
+    for (i = 0; i < l; i++) words[i >> 2] |= bytes.charCodeAt(i) << (24 - (i % 4) * 8);
+    words[l >> 2] |= 0x80 << (24 - (l % 4) * 8);
+    words[(((l + 8) >> 6) + 1) * 16 - 1] = l * 8;
+    for (i = 0; i < words.length; i++) words[i] = words[i] | 0;
+    var hs = H0.slice();
+    for (var o = 0; o < words.length; o += 16) {
+      var w = [], v = hs.slice();
+      for (j = 0; j < 64; j++) {
+        if (j < 16) w[j] = words[o + j];
+        else {
+          var s0 = rotr(w[j - 15], 7) ^ rotr(w[j - 15], 18) ^ (w[j - 15] >>> 3);
+          var s1 = rotr(w[j - 2], 17) ^ rotr(w[j - 2], 19) ^ (w[j - 2] >>> 10);
+          w[j] = (w[j - 16] + s0 + w[j - 7] + s1) | 0;
+        }
+        var S1 = rotr(v[4], 6) ^ rotr(v[4], 11) ^ rotr(v[4], 25);
+        var ch = (v[4] & v[5]) ^ (~v[4] & v[6]);
+        var t1 = (v[7] + S1 + ch + K[j] + w[j]) | 0;
+        var S0 = rotr(v[0], 2) ^ rotr(v[0], 13) ^ rotr(v[0], 22);
+        var maj = (v[0] & v[1]) ^ (v[0] & v[2]) ^ (v[1] & v[2]);
+        var t2 = (S0 + maj) | 0;
+        v = [(t1 + t2) | 0, v[0], v[1], v[2], (v[3] + t1) | 0, v[4], v[5], v[6]];
+      }
+      for (i = 0; i < 8; i++) hs[i] = (hs[i] + v[i]) | 0;
+    }
+    return hs.map(function (x) { return ("00000000" + (x >>> 0).toString(16)).slice(-8); }).join("");
+  }
+  function norm(n) { return n.trim().replace(/\s+/g, " ").toLowerCase(); }
+  var fails = 0, lockedUntil = 0;
+  function showView(acct) {
+    $("portal-form").hidden = true;
+    $("portal-title").textContent = "Your storage";
+    document.querySelector("#portal .sub").hidden = true;
+    $("pv-name").textContent = acct.name;
+    var rows = $("pv-rows"); rows.innerHTML = "";
+    acct.holdings.forEach(function (h) {
+      var tr = document.createElement("tr");
+      ["item", "qty", "purity", "vault", "since"].forEach(function (k) {
+        var td = document.createElement("td"); td.textContent = h[k] || ""; tr.appendChild(td);
+      });
+      rows.appendChild(tr);
+    });
+    $("pv-empty").hidden = acct.holdings.length > 0;
+    $("portal-view").hidden = false;
+    $("pv-out").focus();
+  }
+  function resetPortal() {
+    $("portal-view").hidden = true; $("portal-form").hidden = false;
+    $("portal-title").textContent = "See your storage";
+    document.querySelector("#portal .sub").hidden = false;
+    $("p-name").value = ""; $("p-code").value = ""; $("portal-msg").hidden = true;
+  }
+  var portal = $("portal"), lastFocus = null;
+  function openPortal() {
+    lastFocus = document.activeElement;
+    $("portal-msg").hidden = true;
+    portal.hidden = false;
+    $("p-name").focus();
+  }
+  function closePortal() {
+    portal.hidden = true;
+    resetPortal();
+    if (lastFocus && lastFocus.focus) lastFocus.focus();
+  }
+  Array.prototype.forEach.call(document.querySelectorAll("[data-open-portal]"), function (b) { b.addEventListener("click", openPortal); });
+  $("portal-close").addEventListener("click", closePortal);
+  $("pv-out").addEventListener("click", closePortal);
+  portal.addEventListener("click", function (e) { if (e.target === portal) closePortal(); });
+  document.addEventListener("keydown", function (e) {
+    if (portal.hidden) return;
+    if (e.key === "Escape") { closePortal(); return; }
+    if (e.key === "Tab") {
+      var f = portal.querySelectorAll("button, input"), first = f[0], last = f[f.length - 1];
+      if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+      else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+    }
+  });
+  function say(m) { var el = $("portal-msg"); el.textContent = m; el.hidden = false; }
+  $("portal-form").addEventListener("submit", function (e) {
+    e.preventDefault();
+    var name = $("p-name").value.trim(), code = $("p-code").value;
+    if (!name) { say("Enter the depositor name."); $("p-name").focus(); return; }
+    if (!code) { say("Enter your security code."); $("p-code").focus(); return; }
+    if (Date.now() < lockedUntil) { $("p-code").value = ""; say("Too many attempts. Wait a minute, then try again."); return; }
+    if (!PORTAL_ENDPOINT) {
+      var hash = sha256(norm(name) + "|" + code), acct = null;
+      $("p-code").value = "";
+      ACCOUNTS.forEach(function (a) { if (a.h === hash) acct = a; });
+      if (acct) { fails = 0; showView(acct); return; }
+      fails++;
+      if (fails >= 5) { fails = 0; lockedUntil = Date.now() + 60000; say("Too many attempts. Wait a minute, then try again."); }
+      else say("We could not match those details. Check the name and code, then try again.");
+      return;
+    }
+    var btn = $("portal-submit"); btn.disabled = true; btn.textContent = "Checking...";
+    fetch(PORTAL_ENDPOINT, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ depositor: name, code: code }) })
+      .then(function (r) { return r.json(); })
+      .then(function (d) {
+        if (d && d.ok && d.url) { window.location.href = d.url; return; }
+        say("We could not match those details. Check the name and code, then try again.");
+      })
+      .catch(function () { say("The service could not be reached. Try again shortly or call +233 547078297."); })
+      .then(function () { $("p-code").value = ""; btn.disabled = false; btn.textContent = "View my storage"; });
   });
 })();
 </script>
